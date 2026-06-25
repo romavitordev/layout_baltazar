@@ -6,15 +6,16 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import { montagem } from '@/lib/site'
+import { Embers } from '@/components/fx/Embers'
 
 /* Sementes de gergelim no pão de cima */
 function Sementes() {
   const pos = [
-    { l: '24%', t: '46%', r: -18 },
-    { l: '40%', t: '32%', r: 12 },
+    { l: '28%', t: '42%', r: -18 },
+    { l: '42%', t: '30%', r: 12 },
     { l: '56%', t: '30%', r: -8 },
-    { l: '70%', t: '44%', r: 20 },
-    { l: '48%', t: '54%', r: 0 },
+    { l: '68%', t: '42%', r: 20 },
+    { l: '48%', t: '52%', r: 0 },
   ]
   return (
     <>
@@ -33,64 +34,70 @@ function Sementes() {
 function Pilha({ idx, estatico = false }: { idx: number; estatico?: boolean }) {
   // Quem aparece em cada passo (0..5). Buns no passo 5 (idx 4).
   const on = (passo: number) => (estatico ? true : idx >= passo)
-  const camada = (visivel: boolean, dir: 'cima' | 'baixo') =>
+  const cam = (visivel: boolean, dir: 'cima' | 'baixo') =>
     `transition-all duration-700 ease-[cubic-bezier(.16,1,.3,1)] ${
-      visivel ? 'translate-y-0 opacity-100' : `${dir === 'cima' ? '-translate-y-8' : 'translate-y-8'} opacity-0`
+      visivel ? 'translate-y-0 opacity-100' : `${dir === 'cima' ? '-translate-y-6' : 'translate-y-6'} opacity-0`
     }`
 
   const naBrasa = estatico || idx >= 1
 
   return (
-    <div className="relative mx-auto flex h-[20rem] w-[18rem] flex-col items-center justify-center">
-      {/* brasa embaixo */}
-      <div
-        aria-hidden
-        className="absolute bottom-2 left-1/2 h-10 w-[15rem] -translate-x-1/2 rounded-[50%] animate-brasapulse"
-        style={{ background: 'radial-gradient(closest-side, rgba(244,162,60,0.6), rgba(226,84,28,0.25) 55%, transparent)', filter: 'blur(8px)' }}
-      />
+    <div className="relative mx-auto w-[19rem] max-w-full">
+      <Embers count={10} />
 
-      {/* Pão de cima */}
-      <div className={`relative z-[5] w-full ${camada(on(4), 'cima')}`}>
-        <div
-          className="relative mx-auto h-[4.4rem] w-full rounded-t-[100%] rounded-b-md"
-          style={{ background: 'linear-gradient(180deg,#eab867,#d68a36 70%,#c2782b)', boxShadow: 'inset 0 6px 12px rgba(255,255,255,.25)' }}
-        >
-          <Sementes />
+      {/* Pilha — fatias em slots fixos (sem reflow), revelam por opacidade/translate */}
+      <div className="relative z-10 flex flex-col items-center">
+        {/* Pão de cima */}
+        <div className={`w-full ${cam(on(4), 'cima')}`}>
+          <div
+            className="relative mx-auto h-[4.4rem] w-full rounded-t-[100%] rounded-b-md"
+            style={{ background: 'linear-gradient(180deg,#eab867,#d68a36 72%,#c2782b)', boxShadow: 'inset 0 6px 14px rgba(255,255,255,.28)' }}
+          >
+            <Sementes />
+          </div>
         </div>
+
+        {/* Maionese Baltazar */}
+        <div
+          className={`-mt-1 h-[0.7rem] w-[16rem] rounded-full ${cam(on(3), 'cima')}`}
+          style={{ background: 'linear-gradient(180deg,#fbf3df,#ecdcc0)', boxShadow: '0 2px 0 rgba(0,0,0,.12)' }}
+        />
+
+        {/* Queijo derretendo */}
+        <div className={`relative -mt-[2px] w-[17.4rem] ${cam(on(2), 'cima')}`}>
+          <div className="h-[0.95rem] w-full rounded-md" style={{ background: 'linear-gradient(180deg,#f7b733,#e8902a)' }} />
+          <span className="absolute -bottom-2 left-8 h-3 w-3 rounded-b-full" style={{ background: '#ef9d2b' }} />
+          <span className="absolute -bottom-3 left-1/2 h-4 w-3 -translate-x-1/2 rounded-b-full" style={{ background: '#ef9d2b' }} />
+          <span className="absolute -bottom-2 right-9 h-3 w-3 rounded-b-full" style={{ background: '#ef9d2b' }} />
+        </div>
+
+        {/* Carne (na brasa) — a fatia mais encorpada */}
+        <div
+          className={`-mt-[2px] h-[2.5rem] w-[16.6rem] rounded-[46%] ${cam(on(0), 'cima')}`}
+          style={{
+            background: 'linear-gradient(180deg,#5a3320,#3a2014 58%,#26130b)',
+            boxShadow: naBrasa
+              ? '0 0 30px rgba(226,84,28,.6), inset 0 4px 7px rgba(244,162,60,.4), inset 0 -7px 12px rgba(0,0,0,.55)'
+              : 'inset 0 -7px 12px rgba(0,0,0,.55)',
+            transition: 'box-shadow .8s ease',
+          }}
+        />
+
+        {/* Pão de baixo */}
+        <div
+          className={`-mt-[2px] h-[1.8rem] w-[17rem] rounded-b-[1.5rem] rounded-t-sm ${cam(on(4), 'baixo')}`}
+          style={{ background: 'linear-gradient(180deg,#d68a36,#b06a23)' }}
+        />
       </div>
 
-      {/* Maionese Baltazar */}
-      <div
-        className={`z-[4] -mt-1 h-3 w-[16.5rem] rounded-full ${camada(on(3), 'cima')}`}
-        style={{ background: 'linear-gradient(180deg,#fbf3df,#ecdcc0)', boxShadow: '0 2px 0 rgba(0,0,0,.12)' }}
-      />
-
-      {/* Queijo derretendo */}
-      <div className={`relative z-[3] -mt-1 w-[17.2rem] ${camada(on(2), 'cima')}`}>
-        <div className="h-4 w-full rounded-md" style={{ background: 'linear-gradient(180deg,#f7b733,#e8902a)' }} />
-        {/* pingos */}
-        <span className="absolute -bottom-2 left-6 h-3 w-3 rounded-b-full" style={{ background: '#ef9d2b' }} />
-        <span className="absolute -bottom-3 left-1/2 h-4 w-3 -translate-x-1/2 rounded-b-full" style={{ background: '#ef9d2b' }} />
-        <span className="absolute -bottom-2 right-7 h-3 w-3 rounded-b-full" style={{ background: '#ef9d2b' }} />
+      {/* Cama de brasa — proporcional ao burger, logo abaixo dele */}
+      <div aria-hidden className="relative -mt-1 h-16">
+        <div
+          className="absolute left-1/2 top-1 h-9 w-[17rem] max-w-full -translate-x-1/2 rounded-[50%] animate-brasapulse"
+          style={{ background: 'radial-gradient(closest-side, rgba(244,162,60,0.7), rgba(226,84,28,0.3) 55%, transparent)', filter: 'blur(9px)' }}
+        />
+        <div className="absolute left-1/2 top-1.5 h-px w-[14rem] max-w-full -translate-x-1/2 bg-gradient-to-r from-transparent via-ember/80 to-transparent" />
       </div>
-
-      {/* Carne (na brasa) */}
-      <div
-        className={`z-[2] -mt-0.5 h-9 w-[16.2rem] rounded-[44%] ${camada(on(0), 'cima')}`}
-        style={{
-          background: 'linear-gradient(180deg,#5a3320,#3a2014 60%,#27140c)',
-          boxShadow: naBrasa
-            ? '0 0 26px rgba(226,84,28,.55), inset 0 3px 6px rgba(244,162,60,.35), inset 0 -6px 10px rgba(0,0,0,.5)'
-            : 'inset 0 -6px 10px rgba(0,0,0,.5)',
-          transition: 'box-shadow .8s ease',
-        }}
-      />
-
-      {/* Pão de baixo */}
-      <div
-        className={`z-[1] -mt-0.5 h-7 w-[15.6rem] rounded-b-2xl rounded-t-sm ${camada(on(4), 'baixo')}`}
-        style={{ background: 'linear-gradient(180deg,#d68a36,#b06a23)' }}
-      />
     </div>
   )
 }
@@ -159,7 +166,7 @@ export function Montagem() {
       className="relative h-[320vh] border-y border-osso/10 bg-carvao text-osso"
     >
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
-        <div className="raios pointer-events-none absolute left-[68%] top-1/2 hidden h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 md:block" aria-hidden />
+        <div className="raios pointer-events-none absolute left-[72%] top-1/2 hidden h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 md:block" aria-hidden />
 
         {/* barra de progresso vertical */}
         <div aria-hidden className="absolute left-6 top-1/2 hidden h-40 w-px -translate-y-1/2 bg-osso/15 md:left-10 md:block">
@@ -170,7 +177,7 @@ export function Montagem() {
           {/* Texto do passo */}
           <div className="order-2 md:order-1">
             <p className="kicker">02 — Da brasa ao pão</p>
-            <div className="relative mt-6 h-[15rem] md:h-[17rem]">
+            <div className="relative mt-6 h-[16rem] md:h-[17rem]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={idx}
@@ -179,9 +186,9 @@ export function Montagem() {
                   exit={{ opacity: 0, y: -18 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <p className="font-anton text-7xl leading-none text-brasa/80 md:text-8xl">
+                  <p className="flex items-baseline gap-3 font-anton text-7xl leading-none text-brasa/80 md:text-8xl">
                     {montagem[idx].numero}
-                    <span className="ml-3 text-2xl text-osso/30">/ 0{montagem.length}</span>
+                    <span className="text-2xl text-osso/30">/ 0{montagem.length}</span>
                   </p>
                   <p className="mt-4 label-mono text-osso/45">{montagem[idx].ingrediente}</p>
                   <h3 className="mt-2 font-serif text-4xl tracking-tight md:text-5xl">{montagem[idx].titulo}</h3>
@@ -202,7 +209,7 @@ export function Montagem() {
           </div>
 
           {/* A pilha */}
-          <div className="order-1 md:order-2">
+          <div className="order-1 flex justify-center md:order-2">
             <Pilha idx={idx} />
           </div>
         </div>
