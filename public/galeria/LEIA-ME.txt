@@ -1,0 +1,6 @@
+Coloque aqui as fotos reais da Baltazar (burgers, costelinha, salão, brasa).
+
+Depois aponte as URLs em lib/site.ts para esses arquivos, por exemplo:
+  imagem: '/galeria/o-baltazar.jpg'
+
+Sugestão de tamanho: ~1200px no lado maior, JPG/WebP otimizado.
