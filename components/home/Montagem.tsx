@@ -30,73 +30,86 @@ function Sementes() {
   )
 }
 
-/* A pilha do hambúrguer (CSS puro). `idx` controla a montagem. */
+/* A pilha do hambúrguer (CSS puro). `idx` controla a montagem (build de baixo
+   pra cima — pão de baixo + carne já no passo 1, sobre a brasa: nada flutua). */
 function Pilha({ idx, estatico = false }: { idx: number; estatico?: boolean }) {
-  // Quem aparece em cada passo (0..5). Buns no passo 5 (idx 4).
   const on = (passo: number) => (estatico ? true : idx >= passo)
-  const cam = (visivel: boolean, dir: 'cima' | 'baixo') =>
+  const cam = (visivel: boolean) =>
     `transition-all duration-700 ease-[cubic-bezier(.16,1,.3,1)] ${
-      visivel ? 'translate-y-0 opacity-100' : `${dir === 'cima' ? '-translate-y-6' : 'translate-y-6'} opacity-0`
+      visivel ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
     }`
-
   const naBrasa = estatico || idx >= 1
+  const montado = estatico || idx >= 5
 
   return (
     <div className="relative mx-auto w-[19rem] max-w-full">
+      {/* Sunburst + halo CENTRALIZADOS atrás do burger (motivo da marca) */}
+      <div
+        aria-hidden
+        className="raios pointer-events-none absolute left-1/2 top-[5.2rem] h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 opacity-60"
+      />
+      <div
+        aria-hidden
+        className="halo-brasa pointer-events-none absolute left-1/2 top-[9.5rem] h-[15rem] w-[15rem] -translate-x-1/2 -translate-y-1/2 animate-brasapulse"
+      />
       <Embers count={10} />
 
       {/* Pilha — fatias em slots fixos (sem reflow), revelam por opacidade/translate */}
-      <div className="relative z-10 flex flex-col items-center">
-        {/* Pão de cima */}
-        <div className={`w-full ${cam(on(4), 'cima')}`}>
+      <div
+        className={`relative z-10 flex flex-col items-center transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] ${
+          montado ? 'scale-[1.02]' : 'scale-100'
+        }`}
+      >
+        {/* Pão de cima (passo 5) */}
+        <div className={`w-full ${cam(on(4))}`}>
           <div
-            className="relative mx-auto h-[4.4rem] w-full rounded-t-[100%] rounded-b-md"
+            className="relative mx-auto h-[4.1rem] w-full rounded-t-[100%] rounded-b-md"
             style={{ background: 'linear-gradient(180deg,#eab867,#d68a36 72%,#c2782b)', boxShadow: 'inset 0 6px 14px rgba(255,255,255,.28)' }}
           >
             <Sementes />
           </div>
         </div>
 
-        {/* Maionese Baltazar */}
+        {/* Maionese Baltazar (passo 4) */}
         <div
-          className={`-mt-1 h-[0.7rem] w-[16rem] rounded-full ${cam(on(3), 'cima')}`}
+          className={`-mt-1 h-[0.7rem] w-[15.5rem] rounded-full ${cam(on(3))}`}
           style={{ background: 'linear-gradient(180deg,#fbf3df,#ecdcc0)', boxShadow: '0 2px 0 rgba(0,0,0,.12)' }}
         />
 
-        {/* Queijo derretendo */}
-        <div className={`relative -mt-[2px] w-[17.4rem] ${cam(on(2), 'cima')}`}>
-          <div className="h-[0.95rem] w-full rounded-md" style={{ background: 'linear-gradient(180deg,#f7b733,#e8902a)' }} />
+        {/* Queijo derretendo (passo 3) */}
+        <div className={`relative -mt-[2px] w-[16.6rem] ${cam(on(2))}`}>
+          <div className="h-[0.9rem] w-full rounded-md" style={{ background: 'linear-gradient(180deg,#f7b733,#e8902a)' }} />
           <span className="absolute -bottom-2 left-8 h-3 w-3 rounded-b-full" style={{ background: '#ef9d2b' }} />
           <span className="absolute -bottom-3 left-1/2 h-4 w-3 -translate-x-1/2 rounded-b-full" style={{ background: '#ef9d2b' }} />
           <span className="absolute -bottom-2 right-9 h-3 w-3 rounded-b-full" style={{ background: '#ef9d2b' }} />
         </div>
 
-        {/* Carne (na brasa) — a fatia mais encorpada */}
+        {/* Carne — aparece já no passo 1; ganha brasa no passo 2 */}
         <div
-          className={`-mt-[2px] h-[2.5rem] w-[16.6rem] rounded-[46%] ${cam(on(0), 'cima')}`}
+          className={`-mt-[2px] h-[2.4rem] w-[16rem] rounded-[46%] ${cam(on(0))}`}
           style={{
             background: 'linear-gradient(180deg,#5a3320,#3a2014 58%,#26130b)',
             boxShadow: naBrasa
-              ? '0 0 30px rgba(226,84,28,.6), inset 0 4px 7px rgba(244,162,60,.4), inset 0 -7px 12px rgba(0,0,0,.55)'
+              ? '0 0 28px rgba(226,84,28,.55), inset 0 4px 7px rgba(244,162,60,.4), inset 0 -7px 12px rgba(0,0,0,.55)'
               : 'inset 0 -7px 12px rgba(0,0,0,.55)',
             transition: 'box-shadow .8s ease',
           }}
         />
 
-        {/* Pão de baixo */}
+        {/* Pão de baixo — a base, sobre a brasa (passo 1, junto da carne) */}
         <div
-          className={`-mt-[2px] h-[1.8rem] w-[17rem] rounded-b-[1.5rem] rounded-t-sm ${cam(on(4), 'baixo')}`}
+          className={`-mt-[2px] h-[1.7rem] w-[16.4rem] rounded-b-[1.4rem] rounded-t-sm ${cam(on(0))}`}
           style={{ background: 'linear-gradient(180deg,#d68a36,#b06a23)' }}
         />
       </div>
 
       {/* Cama de brasa — proporcional ao burger, logo abaixo dele */}
-      <div aria-hidden className="relative -mt-1 h-16">
+      <div aria-hidden className="relative -mt-1 h-14">
         <div
-          className="absolute left-1/2 top-1 h-9 w-[17rem] max-w-full -translate-x-1/2 rounded-[50%] animate-brasapulse"
+          className="absolute left-1/2 top-1 h-8 w-[15.5rem] max-w-full -translate-x-1/2 rounded-[50%] animate-brasapulse"
           style={{ background: 'radial-gradient(closest-side, rgba(244,162,60,0.7), rgba(226,84,28,0.3) 55%, transparent)', filter: 'blur(9px)' }}
         />
-        <div className="absolute left-1/2 top-1.5 h-px w-[14rem] max-w-full -translate-x-1/2 bg-gradient-to-r from-transparent via-ember/80 to-transparent" />
+        <div className="absolute left-1/2 top-1 h-px w-[13rem] max-w-full -translate-x-1/2 bg-gradient-to-r from-transparent via-ember/80 to-transparent" />
       </div>
     </div>
   )
@@ -166,8 +179,6 @@ export function Montagem() {
       className="relative h-[320vh] border-y border-osso/10 bg-carvao text-osso"
     >
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
-        <div className="raios pointer-events-none absolute left-[72%] top-1/2 hidden h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 md:block" aria-hidden />
-
         {/* barra de progresso vertical */}
         <div aria-hidden className="absolute left-6 top-1/2 hidden h-40 w-px -translate-y-1/2 bg-osso/15 md:left-10 md:block">
           <div ref={barra} className="h-full w-full origin-top bg-brasa" style={{ transform: 'scaleY(0)' }} />
