@@ -2,6 +2,7 @@ import { Flame, MessageCircle, ShoppingBag, Ticket } from 'lucide-react'
 
 import { endereco, pedido, waLink, waMensagens } from '@/lib/site'
 import { Reveal } from '@/components/ui/Reveal'
+import { CopyCupom } from '@/components/ui/CopyCupom'
 import { PedirButton } from '@/components/layout/PedirButton'
 
 /** Bloco de conversão — cupom BALTA10 + canais de pedido. */
@@ -27,8 +28,7 @@ export function Pedir() {
                 <div className="mt-7 inline-flex items-center gap-3 rounded-2xl border border-brasa/40 bg-brasa/10 px-5 py-3">
                   <Ticket size={20} className="shrink-0 text-brasa" aria-hidden />
                   <p className="text-sm text-osso/85">
-                    Use <span className="font-mono font-semibold text-brasa">{pedido.cupom}</span> e ganhe{' '}
-                    {pedido.cupomTexto}. {pedido.vantagemSite}.
+                    Use <CopyCupom /> e ganhe {pedido.cupomTexto}. {pedido.vantagemSite}.
                   </p>
                 </div>
                 <p className="mt-3 text-xs text-fumaca">{pedido.cashback}.</p>

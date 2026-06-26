@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Flame, MapPin, MessageCircle, ShoppingBag, Ticket, X } from 'lucide-react'
 
 import { brand, endereco, pedido, waLink, waMensagens } from '@/lib/site'
+import { CopyCupom } from '@/components/ui/CopyCupom'
 
 /** Abre o modal de pedido de qualquer lugar (header, hero, nav, CTAs). */
 export function abrirPedir() {
@@ -128,9 +129,8 @@ export function PedirModal() {
         {/* Faixa do cupom */}
         <div className="relative mt-5 flex items-center gap-3 rounded-2xl border border-brasa/30 bg-brasa/10 px-4 py-3">
           <Ticket size={18} className="shrink-0 text-brasa" aria-hidden />
-          <p className="text-sm text-osso/80">
-            <span className="font-mono font-semibold text-brasa">{pedido.cupom}</span> — {pedido.cupomTexto} no
-            site. {pedido.cashback}.
+          <p className="flex flex-wrap items-center gap-x-1.5 text-sm text-osso/80">
+            <CopyCupom /> <span>— {pedido.cupomTexto} no site. {pedido.cashback}.</span>
           </p>
         </div>
 

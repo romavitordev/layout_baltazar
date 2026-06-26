@@ -37,7 +37,7 @@ export function Avaliacoes() {
 
       {/* Marquee infinito — passa sozinho, pausa no hover */}
       <div className="group relative mt-12">
-        <div className="flex w-max gap-5 pl-5 animate-marquee group-hover:[animation-play-state:paused] motion-reduce:animate-none">
+        <div className="flex w-max gap-5 pl-5 animate-marquee group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused] motion-reduce:animate-none">
           {loop.map((a, i) => (
             <figure
               key={i}

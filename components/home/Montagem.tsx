@@ -188,6 +188,7 @@ export function Montagem() {
           {/* Texto do passo */}
           <div className="order-2 md:order-1">
             <p className="kicker">02 — Da brasa ao pão</p>
+            <h2 className="sr-only">Da brasa ao pão: como a gente monta um Baltazar</h2>
             <div className="relative mt-6 h-[16rem] md:h-[17rem]">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -220,7 +221,7 @@ export function Montagem() {
           </div>
 
           {/* A pilha */}
-          <div className="order-1 flex justify-center md:order-2">
+          <div aria-hidden className="order-1 flex justify-center md:order-2">
             <Pilha idx={idx} />
           </div>
         </div>

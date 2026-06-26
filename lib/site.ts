@@ -16,6 +16,7 @@ export const brand = {
   sufixo: 'grilled burger',
   nomeCompleto: 'Baltazar Burger — Sorocaba',
   tagline: 'Burger artesanal na brasa desde 2017.',
+  selo: 'na brasa desde 2017',
   promessa: 'Carne grelhada no fogo, pão na chapa e a Maionese Baltazar — um caminho sem volta.',
   descricao:
     'Hamburgueria artesanal de Sorocaba. Hambúrguer grelhado no fogo, pão brioche tostado na chapa e a Maionese Baltazar feita na casa. Na brasa, sem atalho, desde 2017.',
@@ -36,6 +37,7 @@ export const pedido = {
   beacons: 'https://beacons.ai/baltazarburger',
   cupom: 'BALTA10',
   cupomTexto: '10% OFF no 1º pedido',
+  ctaHero: 'Peça com 10% OFF',
   vantagemSite: '15% mais barato que no balcão',
   cashback: '1% de cashback em todo pedido (validade de 45 dias)',
 }

@@ -7,7 +7,8 @@ import { Reveal } from '@/components/ui/Reveal'
 /** Faixa de números — anos, gramatura, seguidores + a nota 5.0. */
 export function Numeros() {
   return (
-    <section className="relative overflow-hidden bg-grelha py-20 md:py-28">
+    <section aria-labelledby="numeros-h2" className="relative overflow-hidden bg-grelha py-20 md:py-28">
+      <h2 id="numeros-h2" className="sr-only">Baltazar em números</h2>
       <div className="raios pointer-events-none absolute left-1/2 top-1/2 h-[60rem] w-[60rem] -translate-x-1/2 -translate-y-1/2 opacity-60" aria-hidden />
 
       <div className="container-page relative grid gap-12 md:grid-cols-4 md:gap-8">

@@ -12,7 +12,7 @@ import { GrainOverlay } from '@/components/fx/GrainOverlay'
 import { Preloader } from '@/components/fx/Preloader'
 import { ScrollProgress } from '@/components/fx/ScrollProgress'
 import { PedirModal } from '@/components/home/PedirModal'
-import { avaliacaoDestaque, brand, cardapio, endereco, funcionamento, imagens } from '@/lib/site'
+import { brand, cardapio, endereco, funcionamento, imagens } from '@/lib/site'
 
 const anton = Anton({
   subsets: ['latin'],
@@ -109,12 +109,6 @@ const jsonLd = {
       closes: '23:00',
     },
   ],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: avaliacaoDestaque.media,
-    reviewCount: '500',
-    bestRating: '5',
-  },
   hasMenu: {
     '@type': 'Menu',
     hasMenuSection: cardapio.map((c) => ({

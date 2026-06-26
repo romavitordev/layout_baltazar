@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 
-import { brand, hero } from '@/lib/site'
+import { avaliacaoDestaque, brand, hero, pedido } from '@/lib/site'
 import { Embers } from '@/components/fx/Embers'
 import { abrirPedir } from '@/components/home/PedirModal'
 
@@ -151,13 +151,19 @@ export function Hero() {
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <button type="button" onClick={abrirPedir} className="btn-fogo w-full sm:w-auto">
-                  Peça agora
+                  {pedido.ctaHero}
                 </button>
                 <Link href="/cardapio" className="btn-ghost group w-full sm:w-auto">
                   Ver o cardápio
                   <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
+              <p className="mt-6 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-osso/70">
+                <span className="tracking-tight text-brasa" aria-hidden>★★★★★</span>
+                <span className="font-medium text-osso">{avaliacaoDestaque.media}</span>
+                <span className="text-osso/40" aria-hidden>·</span>
+                <span>{brand.selo}</span>
+              </p>
             </div>
           </div>
         </div>

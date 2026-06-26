@@ -1,3 +1,4 @@
+import { faq } from '@/lib/site'
 import { Hero } from '@/components/hero/Hero'
 import { Manifesto } from '@/components/home/Manifesto'
 import { Montagem } from '@/components/home/Montagem'
@@ -10,9 +11,23 @@ import { Pedir } from '@/components/home/Pedir'
 import { VisiteTeaser } from '@/components/home/VisiteTeaser'
 import { Faq } from '@/components/home/Faq'
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+}
+
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <Hero />
       <Manifesto />
       <Montagem />
