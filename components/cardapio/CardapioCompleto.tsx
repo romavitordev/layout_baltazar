@@ -1,23 +1,15 @@
 import { ChevronDown } from 'lucide-react'
 
 import { cardapio } from '@/lib/site'
+import { slug } from '@/lib/slug'
 import { Reveal } from '@/components/ui/Reveal'
-
-function slug(s: string) {
-  return s
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
-}
 
 /** Cardápio completo, por categoria. Itens com história ganham um expandível. */
 export function CardapioCompleto() {
   return (
     <div className="space-y-20 md:space-y-28">
       {cardapio.map((cat) => (
-        <section key={cat.categoria} id={slug(cat.categoria)} aria-label={cat.categoria}>
+        <section key={cat.categoria} id={slug(cat.categoria)} aria-label={cat.categoria} className="scroll-mt-32">
           <Reveal>
             <div className="flex items-baseline gap-4">
               <h2 className="font-anton text-3xl uppercase tracking-tight text-osso md:text-4xl">{cat.categoria}</h2>

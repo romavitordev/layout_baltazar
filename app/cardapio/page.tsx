@@ -3,6 +3,7 @@ import { Ticket } from 'lucide-react'
 
 import { brand, pedido } from '@/lib/site'
 import { CardapioCompleto } from '@/components/cardapio/CardapioCompleto'
+import { CardapioNav } from '@/components/cardapio/CardapioNav'
 import { Pedir } from '@/components/home/Pedir'
 import { StatusAberto } from '@/components/ui/StatusAberto'
 import { PedirButton } from '@/components/layout/PedirButton'
@@ -38,7 +39,9 @@ export default function CardapioPage() {
         </div>
       </header>
 
-      <div className="container-page py-20 md:py-28">
+      <CardapioNav />
+
+      <div className="container-page py-16 md:py-24">
         <CardapioCompleto />
       </div>
 
