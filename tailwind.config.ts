@@ -18,7 +18,9 @@ const config: Config = {
       },
       fontFamily: {
         anton: ['var(--font-anton)', 'Impact', 'sans-serif'],
-        serif: ['var(--font-fraunces)', 'Georgia', 'serif'],
+        // "serif" agora é o Inter (reduzimos de 4 -> 3 famílias). Headings
+        // editoriais em sans premium, no estilo Stripe/Linear.
+        serif: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },

@@ -63,6 +63,8 @@ export const horarios = [
 /** Para o selo "Aberto agora" (getDay: dom=0 … sáb=6). Qua–Dom, 18h–23h. */
 export const funcionamento = { diasAbertos: [3, 4, 5, 6, 0], abre: 18, fecha: 23 }
 
+export const pagamentos = ['Pix', 'Crédito', 'Débito']
+
 export const nav = [
   { href: '/cardapio', label: 'Cardápio' },
   { href: '/brasa', label: 'A Brasa' },

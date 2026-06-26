@@ -1,8 +1,19 @@
 import Link from 'next/link'
 import { Github, Instagram, MapPin, MessageCircle } from 'lucide-react'
 
-import { brand, endereco, horarios, nav, pedido, waLink, waMensagens } from '@/lib/site'
+import {
+  avaliacaoDestaque,
+  brand,
+  endereco,
+  horarios,
+  nav,
+  pagamentos,
+  pedido,
+  waLink,
+  waMensagens,
+} from '@/lib/site'
 import { PedirButton } from '@/components/layout/PedirButton'
+import { StatusAberto } from '@/components/ui/StatusAberto'
 
 export function Footer() {
   const ano = new Date().getFullYear()
@@ -14,9 +25,19 @@ export function Footer() {
       <div className="container-page relative grid gap-12 py-16 md:grid-cols-[1.4fr_0.8fr_1fr] md:py-20">
         <div>
           <p className="font-anton text-4xl uppercase tracking-tight">Baltazar</p>
-          <p className="mt-1 text-[0.6rem] uppercase tracking-[0.32em] text-osso/50">grilled burger · {endereco.cidade}</p>
+          <p className="mt-1 text-[0.6rem] uppercase tracking-[0.32em] text-osso/55">
+            grilled burger · {endereco.cidade}
+          </p>
           <p className="mt-6 max-w-sm text-sm leading-7 text-osso/70">{brand.promessa}</p>
-          <PedirButton className="btn-fogo mt-7">Peça agora</PedirButton>
+
+          <div className="mt-5 flex items-center gap-2 text-sm">
+            <span className="text-brasa" aria-hidden>★★★★★</span>
+            <span className="font-medium text-osso">{avaliacaoDestaque.media}</span>
+            <span className="text-osso/40" aria-hidden>·</span>
+            <span className="text-osso/60">{avaliacaoDestaque.total}</span>
+          </div>
+
+          <PedirButton className="btn-fogo mt-7">{pedido.ctaHero}</PedirButton>
         </div>
 
         <nav
@@ -24,7 +45,7 @@ export function Footer() {
           aria-label="Navegação do rodapé"
         >
           {nav.map((item) => (
-            <Link key={item.href} href={item.href} className="transition-colors hover:text-brasa">
+            <Link key={item.href} href={item.href} className="w-fit transition-colors hover:text-brasa">
               {item.label}
             </Link>
           ))}
@@ -32,7 +53,7 @@ export function Footer() {
             href={pedido.site}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-brasa underline-offset-4 hover:underline"
+            className="w-fit text-brasa underline-offset-4 hover:underline"
           >
             Pedir no site
           </a>
@@ -48,6 +69,7 @@ export function Footer() {
               {h.dias} · {h.horas}
             </p>
           ))}
+          <StatusAberto className="mt-3" />
           <div className="mt-5 flex gap-4 text-osso">
             <a
               aria-label="WhatsApp da Baltazar"
@@ -71,8 +93,25 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container-page relative flex flex-col gap-2 border-t border-osso/10 py-6 text-xs text-osso/45 md:flex-row md:items-center md:justify-between">
-        <p>© {ano} {brand.nomeCompleto} · Burger artesanal na brasa</p>
+      {/* Selos de pagamento (confiança) */}
+      <div className="container-page relative">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-osso/10 py-5">
+          <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-osso/55">Pagamento</span>
+          {pagamentos.map((p) => (
+            <span
+              key={p}
+              className="rounded-full border border-osso/15 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-osso/70"
+            >
+              {p}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="container-page relative flex flex-col gap-2 border-t border-osso/10 py-6 text-xs text-osso/55 md:flex-row md:items-center md:justify-between">
+        <p>
+          © {ano} {brand.nomeCompleto} · Burger artesanal na brasa
+        </p>
         <a
           href="https://github.com/romavitordev"
           target="_blank"

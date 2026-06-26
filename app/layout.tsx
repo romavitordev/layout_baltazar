@@ -1,7 +1,7 @@
 import './globals.css'
 
 import type { Metadata, Viewport } from 'next'
-import { Anton, Fraunces, Inter, Space_Mono } from 'next/font/google'
+import { Anton, Inter, Space_Mono } from 'next/font/google'
 
 import { Footer } from '@/components/layout/Footer'
 import { Header } from '@/components/layout/Header'
@@ -19,13 +19,7 @@ const anton = Anton({
   weight: '400',
   variable: '--font-anton',
   display: 'swap',
-})
-
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  style: ['normal', 'italic'],
-  variable: '--font-fraunces',
-  display: 'swap',
+  preload: true,
 })
 
 const inter = Inter({
@@ -129,7 +123,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="pt-BR"
-      className={`${anton.variable} ${fraunces.variable} ${inter.variable} ${spaceMono.variable}`}
+      className={`${anton.variable} ${inter.variable} ${spaceMono.variable}`}
     >
       <body>
         <script

@@ -21,7 +21,7 @@ export function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-[80] border-b text-osso backdrop-blur-md transition-colors duration-500 ${
-        scrolled ? 'border-osso/10 bg-carvao/85' : 'border-transparent bg-carvao/30'
+        scrolled ? 'border-osso/10 bg-carvao/90 shadow-elev-2' : 'border-transparent bg-carvao/30'
       }`}
     >
       <div className="container-page flex h-16 items-center justify-between md:h-20">
