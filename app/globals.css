@@ -32,6 +32,9 @@
 }
 
 @layer components {
+  /* ---------------------------------------------------------------- */
+  /* Layout & ritmo                                                   */
+  /* ---------------------------------------------------------------- */
   .container-page {
     @apply mx-auto w-full max-w-page px-6 md:px-10;
   }
@@ -40,20 +43,41 @@
     @apply mx-auto w-full max-w-wide px-6 md:px-10;
   }
 
-  /* Rótulos em mono — a assinatura editorial */
+  /* Ritmo vertical único de seção (substitui py-20/24/28/32/36 soltos) */
+  .section-y {
+    padding-block: clamp(4.5rem, 9vw, 8.5rem);
+  }
+  .section-y-tight {
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+  }
+
+  /* Largura de leitura confortável (~60–66ch) */
+  .measure {
+    max-width: 64ch;
+  }
+  .measure-sm {
+    max-width: 52ch;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Rótulos (mono) — a assinatura editorial                          */
+  /* ---------------------------------------------------------------- */
   .kicker {
     @apply font-mono text-[0.7rem] font-medium uppercase tracking-[0.28em] text-brasa;
   }
 
+  /* Contraste corrigido: /45 reprovava em AA → /60 (~5.9:1) */
   .kicker-fumaca {
-    @apply font-mono text-[0.7rem] font-medium uppercase tracking-[0.28em] text-osso/45;
+    @apply font-mono text-[0.7rem] font-medium uppercase tracking-[0.28em] text-osso/60;
   }
 
   .label-mono {
     @apply font-mono text-[0.7rem] uppercase tracking-[0.28em];
   }
 
-  /* Escala tipográfica fluida */
+  /* ---------------------------------------------------------------- */
+  /* Escala tipográfica fluida única                                  */
+  /* ---------------------------------------------------------------- */
   .t-display {
     font-size: clamp(3.6rem, 15vw, 12rem);
     line-height: 0.86;
@@ -72,44 +96,81 @@
     letter-spacing: -0.01em;
   }
 
+  .t-h3 {
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+  }
+
+  .t-lead {
+    font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+    line-height: 1.7;
+  }
+
   .t-num {
     font-size: clamp(3.4rem, 12vw, 9rem);
     line-height: 0.86;
   }
 
-  /* Botões */
+  /* ---------------------------------------------------------------- */
+  /* Botões — com hover, active, focus e disabled                     */
+  /* ---------------------------------------------------------------- */
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300 ease-out;
+    @apply active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50;
   }
 
   .btn-primary {
-    @apply btn bg-brasa text-osso hover:-translate-y-0.5 hover:bg-brasa/90 hover:shadow-[0_14px_40px_-12px_rgba(226,84,28,0.6)];
+    @apply btn bg-brasa text-osso hover:-translate-y-0.5 hover:bg-brasa/90 hover:shadow-brasa active:translate-y-0;
   }
 
-  /* CTA "acende a brasa" — gradiente de fogo */
+  /* CTA "acende a brasa" — gradiente de fogo com varredura de ember no hover */
   .btn-fogo {
     @apply btn text-carvao font-semibold;
-    background-image: linear-gradient(100deg, #f4a23c, #e2541c 60%, #c5410f);
+    background-image: linear-gradient(100deg, #f4a23c, #e2541c 55%, #c5410f);
+    background-size: 180% 100%;
+    background-position: 0% 0%;
     box-shadow: 0 10px 30px -10px rgba(226, 84, 28, 0.55);
+    transition: background-position 0.6s ease, transform 0.3s ease, box-shadow 0.3s ease;
   }
   .btn-fogo:hover {
     @apply -translate-y-0.5;
+    background-position: 100% 0%;
     box-shadow: 0 16px 44px -10px rgba(244, 162, 60, 0.6);
+  }
+  .btn-fogo:active {
+    @apply translate-y-0;
   }
 
   .btn-ghost {
-    @apply btn border border-osso/25 text-osso hover:-translate-y-0.5 hover:border-osso/70;
+    @apply btn border border-osso/25 text-osso hover:-translate-y-0.5 hover:border-osso/70 active:translate-y-0;
+  }
+
+  /* Link de ação (com seta etc.) */
+  .btn-link {
+    @apply inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] text-osso/70 transition-colors hover:text-brasa;
   }
 
   .chip {
     @apply inline-flex items-center rounded-full border border-current px-3.5 py-1 font-mono text-[0.68rem] uppercase tracking-[0.18em];
   }
 
-  /* Cartões na tela escura */
-  .card-escuro {
-    @apply rounded-2xl border border-osso/10 bg-grelha;
+  /* ---------------------------------------------------------------- */
+  /* Superfícies / cartões (elevação pra tema escuro)                 */
+  /* ---------------------------------------------------------------- */
+  .card-escuro,
+  .surface {
+    @apply rounded-2xl border border-osso/10 bg-grelha shadow-elev-1;
   }
 
+  /* Card interativo: hover lift + borda quente + glow sutil */
+  .card-hover {
+    @apply transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-brasa/40 hover:shadow-brasa-lg;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Efeitos de marca                                                 */
+  /* ---------------------------------------------------------------- */
   /* Halo de brasa — glow radial atrás de títulos/heros */
   .halo-brasa {
     position: absolute;
@@ -140,16 +201,35 @@
     color: transparent;
   }
 
+  /* Costura entre seções — fio quente sutil */
+  .seam-brasa {
+    height: 1px;
+    background-image: linear-gradient(90deg, transparent, rgba(244, 162, 60, 0.45), transparent);
+  }
+
   /* Máscara de reveal por linha (tipografia cinética) */
   .linha-mask {
     overflow: hidden;
     display: block;
   }
 
-  /* Campos de formulário (tema escuro) */
+  /* ---------------------------------------------------------------- */
+  /* Formulários (tema escuro) — com estados                          */
+  /* ---------------------------------------------------------------- */
   .campo {
     @apply w-full rounded-xl border border-osso/15 bg-carvao px-4 py-3 text-sm text-osso transition-colors;
     @apply placeholder:text-osso/35 focus:border-brasa focus:outline-none focus:ring-1 focus:ring-brasa;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Skeleton de carregamento (imagens/blocos) */
+  .skeleton {
+    @apply relative overflow-hidden bg-[#1c1611];
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full animate-shimmer;
+    background: linear-gradient(90deg, transparent, rgba(244, 236, 224, 0.06), transparent);
   }
 }
 

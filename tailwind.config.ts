@@ -28,7 +28,15 @@ const config: Config = {
       },
       transitionTimingFunction: {
         saida: 'cubic-bezier(.16,1,.3,1)',
+        expo: 'cubic-bezier(.16,1,.3,1)',
         cortina: 'cubic-bezier(.76,0,.24,1)',
+      },
+      boxShadow: {
+        // Elevação pra UI escura: profundidade + leve calor, sem sombra "preta chapada".
+        'elev-1': '0 1px 0 0 rgba(244,236,224,0.04) inset, 0 8px 24px -16px rgba(0,0,0,0.7)',
+        'elev-2': '0 1px 0 0 rgba(244,236,224,0.05) inset, 0 18px 50px -28px rgba(0,0,0,0.8)',
+        brasa: '0 14px 40px -12px rgba(226,84,28,0.55)',
+        'brasa-lg': '0 22px 60px -22px rgba(244,162,60,0.55)',
       },
       keyframes: {
         descer: {
@@ -54,12 +62,17 @@ const config: Config = {
           from: { transform: 'scale(1)' },
           to: { transform: 'scale(1.1)' },
         },
+        // Brilho de skeleton (loading)
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
+        },
       },
       animation: {
         descer: 'descer 1.8s ease-in-out infinite',
         marquee: 'marquee 60s linear infinite',
         brasapulse: 'brasapulse 3.2s ease-in-out infinite',
         kenburns: 'kenburns 16s ease-in-out infinite alternate',
+        shimmer: 'shimmer 1.6s infinite',
       },
     },
   },
